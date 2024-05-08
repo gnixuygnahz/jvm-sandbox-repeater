@@ -26,6 +26,7 @@ public class DefaultConfigManager implements ConfigManager {
         HttpUtil.Resp resp = null;
         while (--retryTime > 0) {
             resp = HttpUtil.doGet(String.format(DEFAULT_CONFIG_URL, ApplicationModel.instance().getAppName(),
+                    ApplicationModel.instance().getHost(),
                     ApplicationModel.instance().getEnvironment()));
             if (resp.isSuccess()) {
                 break;
