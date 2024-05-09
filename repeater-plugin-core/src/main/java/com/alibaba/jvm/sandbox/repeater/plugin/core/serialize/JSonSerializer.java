@@ -44,6 +44,24 @@ public class JSonSerializer extends AbstractSerializerAdapter {
     }
 
     @Override
+    public String serialize2StringNative(Object object, ClassLoader classLoader) throws SerializeException {
+        ClassLoader swap = Thread.currentThread().getContextClassLoader();
+        try {
+            if (classLoader != null) {
+                Thread.currentThread().setContextClassLoader(classLoader);
+            }
+            return JSON.toJSONString(object, features);
+        } catch (Throwable t) {
+            // may produce sof exception
+            throw new SerializeException("[Error-1001]-json-serialize-error", t);
+        } finally {
+            if (classLoader != null) {
+                Thread.currentThread().setContextClassLoader(swap);
+            }
+        }
+    }
+
+    @Override
     public <T> T deserialize(byte[] bytes, Class<T> type, ClassLoader classLoader) throws SerializeException {
         ClassLoader swap = Thread.currentThread().getContextClassLoader();
         try {

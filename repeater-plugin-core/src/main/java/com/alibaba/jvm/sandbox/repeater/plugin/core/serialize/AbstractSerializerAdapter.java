@@ -32,6 +32,16 @@ public abstract class AbstractSerializerAdapter implements Serializer {
     }
 
     @Override
+    public String serialize2StringNative(Object object) throws SerializeException {
+        return serialize2StringNative(object, null);
+    }
+
+    @Override
+    public String serialize2StringNative(Object object, ClassLoader classLoader) throws SerializeException {
+        return null;
+    }
+
+    @Override
     public byte[] serialize(Object object) throws SerializeException {
         return serialize(object, null);
     }
