@@ -102,6 +102,18 @@ public interface Serializer {
     <T> T deserialize(byte[] bytes, Class<T> type, ClassLoader classLoader) throws SerializeException;
 
     /**
+     * 将bytes二进制数组反序列化到目标对象
+     *
+     * @param bytes       序列化的二进制数组
+     * @param classLoader 类加载器
+     * @param type        泛型类型
+     * @param <T>         泛型对象
+     * @return 反序列化后的对象
+     * @throws SerializeException 序列化异常
+     */
+    <T> T deserialize2(byte[] bytes, Class<T> type, ClassLoader classLoader) throws SerializeException;
+
+    /**
      * 将sequence字符串反序列化到目标对象
      *
      * @param sequence 序列化后的字符串
@@ -111,6 +123,8 @@ public interface Serializer {
      * @throws SerializeException 序列化异常
      */
     <T> T deserialize(String sequence, Class<T> type) throws SerializeException;
+
+    <T> T deserialize2(String sequence, Class<T> type) throws SerializeException;
 
     /**
      * 无泛型反序列化
@@ -141,6 +155,8 @@ public interface Serializer {
      * @throws SerializeException 序列化异常
      */
     <T> T deserialize(String sequence, Class<T> type, ClassLoader classLoader) throws SerializeException;
+
+    <T> T deserialize2(String sequence, Class<T> type, ClassLoader classLoader) throws SerializeException;
 
     enum Type {
         HESSIAN,

@@ -122,7 +122,7 @@ public class DefaultBroadcaster extends AbstractBroadcaster {
         ClassLoader swap = Thread.currentThread().getContextClassLoader();
         try {
             Thread.currentThread().setContextClassLoader(DefaultBroadcaster.class.getClassLoader());
-            RecordWrapper wrapper = SerializerWrapper.jsonDeserialize(pr.getData(), RecordWrapper.class);
+            RecordWrapper wrapper = SerializerWrapper.jsonDeserialize2(pr.getData(), RecordWrapper.class);
             SerializerWrapper.inTimeDeserialize(wrapper.getEntranceInvocation());
             if (meta.isMock() && CollectionUtils.isNotEmpty(wrapper.getSubInvocations())) {
                 for (Invocation invocation : wrapper.getSubInvocations()) {

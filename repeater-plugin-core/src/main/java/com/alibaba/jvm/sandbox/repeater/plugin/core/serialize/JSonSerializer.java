@@ -1,6 +1,9 @@
 package com.alibaba.jvm.sandbox.repeater.plugin.core.serialize;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONReader;
+import com.alibaba.fastjson.JSONWriter;
+import com.alibaba.fastjson.parser.Feature;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import org.kohsuke.MetaInfServices;
 
@@ -18,6 +21,14 @@ public class JSonSerializer extends AbstractSerializerAdapter {
             SerializerFeature.IgnoreNonFieldGetter,
             SerializerFeature.WriteMapNullValue,
             SerializerFeature.SkipTransientField,
+    };
+
+    private SerializerFeature[] features2 = new SerializerFeature[]{
+            SerializerFeature.IgnoreErrorGetter,
+            SerializerFeature.IgnoreNonFieldGetter,
+            SerializerFeature.WriteMapNullValue,
+            SerializerFeature.SkipTransientField,
+            SerializerFeature.WriteClassName
     };
 
     @Override
@@ -50,7 +61,7 @@ public class JSonSerializer extends AbstractSerializerAdapter {
             if (classLoader != null) {
                 Thread.currentThread().setContextClassLoader(classLoader);
             }
-            return JSON.toJSONString(object, features);
+            return JSON.toJSONString(object, features2);
         } catch (Throwable t) {
             // may produce sof exception
             throw new SerializeException("[Error-1001]-json-serialize-error", t);
@@ -69,6 +80,23 @@ public class JSonSerializer extends AbstractSerializerAdapter {
                 Thread.currentThread().setContextClassLoader(classLoader);
             }
             return JSON.parseObject(bytes, type);
+        } catch (Throwable t) {
+            throw new SerializeException("[Error-1002]-json-deserialize-error", t);
+        } finally {
+            if (classLoader != null) {
+                Thread.currentThread().setContextClassLoader(swap);
+            }
+        }
+    }
+
+    @Override
+    public <T> T deserialize2(byte[] bytes, Class<T> type, ClassLoader classLoader) throws SerializeException {
+        ClassLoader swap = Thread.currentThread().getContextClassLoader();
+        try {
+            if (classLoader != null) {
+                Thread.currentThread().setContextClassLoader(classLoader);
+            }
+            return JSON.parseObject(bytes, type, Feature.SupportAutoType);
         } catch (Throwable t) {
             throw new SerializeException("[Error-1002]-json-deserialize-error", t);
         } finally {

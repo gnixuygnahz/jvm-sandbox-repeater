@@ -61,6 +61,10 @@ public class Identity implements java.io.Serializable{
 
     }
 
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
+
     public String getUri() {
         updateIfNecessary();
         return uri;

@@ -57,6 +57,11 @@ public abstract class AbstractSerializerAdapter implements Serializer {
     }
 
     @Override
+    public <T> T deserialize2(String sequence, Class<T> type) throws SerializeException {
+        return sequence == null ? null : deserialize2(sequence, type, null);
+    }
+
+    @Override
     public <T> T deserialize(String sequence, Class<T> type, ClassLoader classLoader) throws SerializeException {
         // sequence -> byte
         // 每次压缩之后base64的结果都不一样；会导致相似度匹配失效
@@ -65,8 +70,21 @@ public abstract class AbstractSerializerAdapter implements Serializer {
     }
 
     @Override
+    public <T> T deserialize2(String sequence, Class<T> type, ClassLoader classLoader) throws SerializeException {
+        // sequence -> byte
+        // 每次压缩之后base64的结果都不一样；会导致相似度匹配失效
+        // return deserialize(decode(sequence), type, classLoader);
+        return sequence == null ? null : deserialize2(BaseEncoding.base64().decode(sequence), type, classLoader);
+    }
+
+    @Override
     public Object deserialize(String sequence) throws SerializeException{
         return sequence == null ? null : deserialize(BaseEncoding.base64().decode(sequence));
+    }
+
+    @Override
+    public <T> T deserialize2(byte[] bytes, Class<T> type, ClassLoader classLoader) throws SerializeException {
+        return null;
     }
 
     /**

@@ -63,6 +63,10 @@ public class SerializerWrapper {
         return provider.provide(Type.JSON).deserialize(sequence, tClass);
     }
 
+    public static <T> T jsonDeserialize2(String sequence, Class<T> tClass) throws SerializeException {
+        return provider.provide(Type.JSON).deserialize2(sequence, tClass);
+    }
+
     /**
      * hessian序列化
      *
