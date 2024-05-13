@@ -283,6 +283,7 @@ public class RepeaterModule implements Module, ModuleLifecycle {
             req.put(Constants.DATA_TRANSPORT_IDENTIFY, SerializerProvider.instance().provide(Serializer.Type.HESSIAN).serialize2String(meta));
             repeat(req, writer);
         } catch (Throwable e) {
+            e.printStackTrace();
             writer.write(e.getMessage());
         }
     }
