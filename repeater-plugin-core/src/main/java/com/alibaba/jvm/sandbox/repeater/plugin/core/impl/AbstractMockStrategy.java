@@ -64,6 +64,9 @@ public abstract class AbstractMockStrategy implements MockStrategy {
                 mi.setSuccess(true);
                 mi.setOriginUri(invocation.getIdentity().getUri());
                 mi.setOriginArgs(invocation.getRequest());
+                mi.setOriginInvokeId(invocation.getInvokeId());
+                mi.setOriginProcessId(invocation.getProcessId());
+
             } else {
                 response = MockResponse.builder()
                         .action(Action.THROWS_IMMEDIATELY)

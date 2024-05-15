@@ -18,6 +18,26 @@ public class MockInvocation implements java.io.Serializable {
     private Object[] originArgs;
     private Object[] currentArgs;
 
+    private int originInvokeId;
+
+    private int originProcessId;
+
+    public int getOriginInvokeId() {
+        return originInvokeId;
+    }
+
+    public void setOriginInvokeId(int originInvokeId) {
+        this.originInvokeId = originInvokeId;
+    }
+
+    public int getOriginProcessId() {
+        return originProcessId;
+    }
+
+    public void setOriginProcessId(int originProcessId) {
+        this.originProcessId = originProcessId;
+    }
+
     public int getIndex() {
         return index;
     }
