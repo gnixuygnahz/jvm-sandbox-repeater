@@ -79,6 +79,25 @@ public interface Serializer {
     String serialize2StringNative(Object object, ClassLoader classLoader) throws SerializeException;
 
     /**
+     * 序列化java对象到字符串
+     *
+     * @param object 序列化的对象
+     * @return 序列化后的字符串 默认字符集采用 {@link Serializer#defaultCharset}
+     * @throws SerializeException 序列化异常
+     */
+    String serialize2StringNative2(Object object) throws SerializeException;
+
+    /**
+     * 序列化java对象到字符串
+     *
+     * @param object      序列化的对象
+     * @param classLoader 类加载器
+     * @return 序列化后的字符串 默认字符集采用 {@link Serializer#defaultCharset}
+     * @throws SerializeException 序列化异常
+     */
+    String serialize2StringNative2(Object object, ClassLoader classLoader) throws SerializeException;
+
+    /**
      * 将bytes二进制数组反序列化到目标对象
      *
      * @param bytes 序列化的二进制数组

@@ -31,6 +31,16 @@ public class JSonSerializer extends AbstractSerializerAdapter {
             SerializerFeature.WriteClassName
     };
 
+    private SerializerFeature[] features3 = new SerializerFeature[]{
+            SerializerFeature.IgnoreErrorGetter,
+            SerializerFeature.IgnoreNonFieldGetter,
+            SerializerFeature.WriteMapNullValue,
+            SerializerFeature.SkipTransientField,
+            SerializerFeature.WriteClassName,
+            SerializerFeature.DisableCircularReferenceDetect
+    };
+
+
     @Override
     public Type type() {
         return Type.JSON;
@@ -62,6 +72,24 @@ public class JSonSerializer extends AbstractSerializerAdapter {
                 Thread.currentThread().setContextClassLoader(classLoader);
             }
             return JSON.toJSONString(object, features2);
+        } catch (Throwable t) {
+            // may produce sof exception
+            throw new SerializeException("[Error-1001]-json-serialize-error", t);
+        } finally {
+            if (classLoader != null) {
+                Thread.currentThread().setContextClassLoader(swap);
+            }
+        }
+    }
+
+    @Override
+    public String serialize2StringNative2(Object object, ClassLoader classLoader) throws SerializeException {
+        ClassLoader swap = Thread.currentThread().getContextClassLoader();
+        try {
+            if (classLoader != null) {
+                Thread.currentThread().setContextClassLoader(classLoader);
+            }
+            return JSON.toJSONString(object, features3);
         } catch (Throwable t) {
             // may produce sof exception
             throw new SerializeException("[Error-1001]-json-serialize-error", t);

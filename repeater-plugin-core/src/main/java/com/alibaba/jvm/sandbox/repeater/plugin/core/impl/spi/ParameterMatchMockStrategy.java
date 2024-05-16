@@ -84,7 +84,7 @@ public class ParameterMatchMockStrategy extends AbstractMockStrategy {
                         break;
                     }
                 }
-                if (similarity == 100){
+                if (similarity == 1.0){
                     diff = false;
                 }
                 log.info("find target invocation by {},identity={},invocation={}", type().name(), request.getIdentity().getUri(), invocation);

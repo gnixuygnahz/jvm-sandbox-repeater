@@ -46,6 +46,17 @@ public class SerializerWrapper {
      * @return 序列化字符串
      * @throws SerializeException 序列化异常
      */
+    public static String jsonSerializeNative2(Object object) throws SerializeException {
+        return provider.provide(Type.JSON).serialize2StringNative2(object);
+    }
+
+    /**
+     * 传输对象默认采用JSON序列化
+     *
+     * @param object 包装对象
+     * @return 序列化字符串
+     * @throws SerializeException 序列化异常
+     */
     public static String jsonSerialize(Object object, ClassLoader classLoader) throws SerializeException {
         return provider.provide(Type.JSON).serialize2String(object, classLoader);
     }

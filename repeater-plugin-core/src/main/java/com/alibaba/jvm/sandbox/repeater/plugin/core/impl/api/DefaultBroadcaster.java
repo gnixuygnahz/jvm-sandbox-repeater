@@ -61,7 +61,8 @@ public class DefaultBroadcaster extends AbstractBroadcaster {
     protected void broadcastRecord(RecordModel recordModel) {
         try {
             RecordWrapper wrapper = new RecordWrapper(recordModel);
-            String body = SerializerWrapper.jsonSerializeNative(wrapper);
+            // 禁用JSON循环引用
+            String body = SerializerWrapper.jsonSerializeNative2(wrapper);
             broadcast(broadcastRecordUrl, body, recordModel.getTraceId());
         } catch (SerializeException e) {
             log.error("broadcast record failed", e);
@@ -73,6 +74,7 @@ public class DefaultBroadcaster extends AbstractBroadcaster {
     @Override
     protected void broadcastRepeat(RepeatModel record) {
         try {
+            // 无需禁用
             String body = SerializerWrapper.jsonSerializeNative(record);
             broadcast(broadcastRepeatUrl, body, record.getTraceId());
         } catch (SerializeException e) {
