@@ -68,7 +68,7 @@ public class ReflectCompareStrategy extends AbstractMockStrategy {
                         break;
                     }
                 }
-                return SelectResult.builder().match(true).invocation(invocation).cost(stopwatch.stop().elapsed(TimeUnit.MILLISECONDS)).build();
+                return SelectResult.builder().match(true).diff(false).invocation(invocation).cost(stopwatch.stop().elapsed(TimeUnit.MILLISECONDS)).build();
             }
             invocationMap.put(result.getDifferences().size(), invocation);
         }

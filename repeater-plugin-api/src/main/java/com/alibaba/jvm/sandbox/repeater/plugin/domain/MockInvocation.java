@@ -17,10 +17,19 @@ public class MockInvocation implements java.io.Serializable {
     private String currentUri;
     private Object[] originArgs;
     private Object[] currentArgs;
+    private boolean diff;
 
     private int originInvokeId;
 
     private int originProcessId;
+
+    public boolean isDiff() {
+        return diff;
+    }
+
+    public void setDiff(boolean diff) {
+        this.diff = diff;
+    }
 
     public int getOriginInvokeId() {
         return originInvokeId;

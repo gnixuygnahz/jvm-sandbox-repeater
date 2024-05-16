@@ -18,11 +18,18 @@ public class SelectResult {
 
     private Long cost;
 
-    @ConstructorProperties({"match", "invocation", "cost"})
-    SelectResult(boolean match, Invocation invocation, Long cost) {
+    private boolean diff;
+
+    @ConstructorProperties({"match", "invocation", "cost", "diff"})
+    SelectResult(boolean match, Invocation invocation, Long cost, boolean diff) {
         this.match = match;
         this.invocation = invocation;
         this.cost = cost;
+        this.diff = diff;
+    }
+
+    public boolean isDiff() {
+        return diff;
     }
 
     public static SelectResult.SelectResultBuilder builder() {
@@ -46,7 +53,14 @@ public class SelectResult {
         private Invocation invocation;
         private Long cost;
 
+        private boolean diff = true;
+
         SelectResultBuilder() {
+        }
+
+        public SelectResult.SelectResultBuilder diff(boolean diff) {
+            this.diff = diff;
+            return this;
         }
 
         public SelectResult.SelectResultBuilder match(boolean match) {
@@ -65,7 +79,7 @@ public class SelectResult {
         }
 
         public SelectResult build() {
-            return new SelectResult(this.match, this.invocation, this.cost);
+            return new SelectResult(this.match, this.invocation, this.cost, this.diff);
         }
 
         @Override

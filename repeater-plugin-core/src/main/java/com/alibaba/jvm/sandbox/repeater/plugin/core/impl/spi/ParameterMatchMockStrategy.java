@@ -68,6 +68,7 @@ public class ParameterMatchMockStrategy extends AbstractMockStrategy {
         // 计算相似度;根据相似度进行排序
         for (Invocation invocation : target) {
             double similarity;
+            boolean diff = true;
             try {
                 similarity = calcSimilarity(invocation, request, requestSerialized);
             } catch (SerializeException e) {
@@ -83,8 +84,11 @@ public class ParameterMatchMockStrategy extends AbstractMockStrategy {
                         break;
                     }
                 }
+                if (similarity == 100){
+                    diff = false;
+                }
                 log.info("find target invocation by {},identity={},invocation={}", type().name(), request.getIdentity().getUri(), invocation);
-                return SelectResult.builder().match(true).invocation(invocation).cost(stopwatch.stop().elapsed(TimeUnit.MILLISECONDS)).build();
+                return SelectResult.builder().match(true).diff(diff).invocation(invocation).cost(stopwatch.stop().elapsed(TimeUnit.MILLISECONDS)).build();
             }
             invocationMap.put(similarity, invocation);
         }

@@ -51,6 +51,7 @@ public abstract class AbstractMockStrategy implements MockStrategy {
             mi.setCurrentArgs(request.getArgumentArray());
             mi.setTraceId(request.getTraceId());
             mi.setCost(select.getCost());
+            mi.setDiff(select.isDiff());
             mi.setRepeatId(request.getRepeatId());
             // add mock invocation
             RepeatCache.addMockInvocation(mi);
